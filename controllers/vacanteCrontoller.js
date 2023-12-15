@@ -5,9 +5,13 @@ exports.formularioNuevaVacante = (req, res) => {
 	res.render('nueva-vacante', {
 		nombrePagina: 'Registrar Vacantes',
 		tagline: 'completa el formulario y publica tu vacante',
+		mostrarImagen4:true,
 		boton: false,
 		parrafo:false,
-		nombrePaginaMostrar:true
+		nombrePaginaMostrar:true,
+		cerrarSesion:true,
+        nombre: req.user.nombre
+	
 		
 	});
 };
@@ -59,7 +63,11 @@ exports.formEditarVacante = async (req, res, next) => {
 		nombrePagina: `Editar-${vacante.titulo}`,
 		barra: false,
 		boton:false,
-		nombrePaginaMostrar:true
+		nombrePaginaMostrar:true,
+		cerrarSesion:true,
+        nombre: req.user.nombre,
+		mostrarImagen3:true
+		
 	})
 }
 
@@ -76,5 +84,50 @@ exports.editarVacante = async (req, res) => {
 	res.redirect(`/vacantes/${vacante.url}`);
 
 }
+
+//validar y sanitizar los campos de lñas nuevas vacantes
+
+exports.validarVancante = (req, res, next) => {
+    // sanitizar los campos
+    req.sanitizeBody('titulo').escape();
+    req.sanitizeBody('empresa').escape();
+    req.sanitizeBody('ubicacion').escape();
+    req.sanitizeBody('salario').escape();
+    req.sanitizeBody('contrato').escape();
+    req.sanitizeBody('skills').escape();
+
+    // validar
+    req.checkBody('titulo', 'Agrega un Titulo').notEmpty();
+    req.checkBody('empresa', 'Agrega una Empresa').notEmpty();
+    req.checkBody('ubicacion', 'Agrega una Ubicación').notEmpty();
+    req.checkBody('contrato', 'Selecciona un Tipo de Contrato').notEmpty();
+    req.checkBody('skills', 'Agrega al menos un conocimiento').notEmpty();
+
+    const errores = req.validationErrors();
+
+    if(errores) {
+        // Recargar la vista con los errores
+        req.flash('error', errores.map(error => error.msg));
+
+        res.render('nueva-vacante', {
+            nombrePagina: 'Registrar Vacantes',
+            tagline: 'Llena el formulario y publica tu vacante',
+            cerrarSesion: true,
+            nombre : req.user.nombre,
+            mensajes: req.flash(),
+			nombrePaginaMostrar:true,
+			mostrarImagen4:true
+        })
+    }else{
+
+		next();
+
+	}
+
+}
+		
+
+
+ 
 
 

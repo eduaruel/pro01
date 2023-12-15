@@ -37,6 +37,8 @@ exports.validarRegistro = (req, res, next) => {
             tagline: 'Comienza a publicar tus vacantes',
             nombrePaginaMostrar:true,
             parrafo:true,
+            cerrarSesion:true,
+			nombre: req.user.nombre,
             mensajes: req.flash()
         })
         return 
@@ -66,4 +68,72 @@ exports.formIniciarSesion = (req, res) => {
         nombrePagina: 'Iniciar-Sesión',
         nombrePaginaMostrar:true,
     })
+}
+
+//form  editar perfil
+exports.formEditarPerfil = (req, res) => {
+    res.render('editar-perfil', {
+        nombrePagina: 'editar tú Perfil con SG Venezuela',
+        nombrePaginaMostrar:true,
+        Usuarios: req.user,
+        cerrarSesion:true,
+        nombre: req.user.nombre,
+        mostrarImagen3: true
+    })
+}
+
+//Guardar cambios editar perfil
+exports.editarPerfil = async (req, res) => {
+    const usuario = await Usuarios.findById(req.user._id);
+
+    // console.log(usuario);
+
+    usuario.nombre = req.body.nombre;
+    usuario.email  = req.body.email;
+    if (req.body.password) {
+        usuario.password = req.body.password;
+    }
+    req.flash('correcto', 'Cambios Sactifactorio')
+    await usuario.save();
+
+    //redireccionando
+
+    res.redirect('/administracion');
+}
+
+//senitizar y validar formualario de editar perfiles
+exports.validarPerfil = (req, res, next) =>{
+    //sanitizar
+    req.sanitizeBody('nombre').escape();
+    req.sanitizeBody('email').escape();
+    if(req.body.password){
+        req.sanitizeBody('password').escape();
+    }
+
+    //validar
+    req.checkBody('nombre','El nombre no puede ir vacio').notEmpty();
+    req.checkBody('email','El email no puede ir vacio').notEmpty();
+
+    const errores = req.validationErrors();
+
+    if(errores){
+        req.flash('error', errores.map(error => error.msg));
+
+        res.render('editar-perfil', {
+        nombrePagina: 'editar tú Perfil con SG Venezuela',
+        nombrePaginaMostrar:true,
+        Usuarios: req.user,
+        cerrarSesion:true,
+        nombre: req.user.nombre,
+        mostrarImagen3: true,
+        mensajes: req.flash()
+
+         })
+    }else{
+
+        next()
+
+    }
+
+
 }

@@ -16,6 +16,7 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const passport = require('./config/passport');
+const expressSanitizer = require('express-sanitizer');
 
 
 require('dotenv').config({path: 'variables.env'});
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //validar campos
 app.use(expressValidator());
+app.use(expressSanitizer());
 
 //hablitar handlebar como view
 app.engine('handlebars',

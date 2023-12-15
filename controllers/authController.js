@@ -32,7 +32,22 @@ exports.panel = async (req, res) => {
         tagLine: 'Crea y Administra tus Vacantes',
         nombrePaginaMostrar:true,
         nuevaTagLine:true,
+        cerrarSesion:true,
+        nombre: req.user.nombre,
+        mostrarImagen2:true,
         vacantes
         
     });
 };
+
+exports.cerrarSesion = (req, res, next) => {
+    req.logout(function(err){
+        if(err) {
+            return next(err);
+        }
+        req.flash('correcto','Sesion Cerrada')
+        return res.redirect('/iniciar-sesion')
+    });
+ 
+    
+}

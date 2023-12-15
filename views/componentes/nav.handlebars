@@ -13,5 +13,13 @@
         </form>
     </div>
     {{/if}}
+
+    {{#if cerrarSesion}}
+        <div class="cerrar-sesion">
+            <p class="">Bienvenido! {{nombre}}</p>
+            <a href="/administracion" class="">Mi Perfil</a>
+            <a href="/cerrar-sesion" class="btn btn-rojo">Cerrar Sesión</a>
+        </div>
+    {{/if}}
     </div>
 </nav>
