@@ -37,6 +37,63 @@ body {
 	background-color: #ffffff;
 	font-size: 1.6rem;
 }
+p.candidatos {
+	font-weight: 400;
+	color: white;
+	display: block;
+	font-size: 1.8rem;
+	margin: 1rem 0 0 0;
+	text-align: left !important;
+	text-decoration: none;
+	color: #616065;
+}
+
+.admin-perfil {
+	height: 49px;
+	width: 10px;
+	margin-right: 1rem;
+	border-radius: 30%;
+	-webkit-border-radius: 30%;
+	-moz-border-radius: 30%;
+	-ms-border-radius: 30%;
+	-o-border-radius: 30%;
+}
+.admin-perfil2 {
+	height: 120px;
+	width: 130px;
+	align-self: flex-start;
+	margin-right: 1rem;
+}
+.info-reclutador h2 {
+	color: #616065;
+	font-size: 2.4rem;
+}
+.info-reclutador img {
+	max-width: 300px;
+	width: 100%;
+}
+.datos-reclutador {
+	border-top: 1px solid #616065;
+	padding: 5rem 0;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 4rem;
+}
+.datos-reclutador p {
+	font-size: 2.4rem;
+	color: white;
+}
+.enviar-datos h2 {
+	font-size: 4rem;
+	color: #616065;
+}
+.enviar-datos p {
+	color: #616065;
+	font-size: 1.8rem;
+}
+.cerrar-sesion img {
+	width: 80px;
+}
 .info_main div p {
 	font-size: 1.5rem;
 }
@@ -62,6 +119,10 @@ body {
 }
 .btn-rojo {
 	background-color: #ff4f5a;
+}
+.btn-azul {
+	background-color: #3c80fb;
+	margin-bottom: 0;
 }
 .center {
 	text-align: center;
@@ -150,6 +211,16 @@ body {
 }
 .caja {
 	padding: 0.5rem 0;
+}
+.caja2 {
+	border-bottom: 1px solid #272727;
+	margin-top: 5rem;
+}
+.caja3 {
+	margin-top: 3rem;
+}
+.logo1 {
+	margin-top: 1rem;
 }
 .caja p {
 	color: #0e0e0e;
@@ -981,8 +1052,8 @@ a:focus {
 	-webkit-box-pack: justify;
 	-ms-flex-pack: justify;
 	justify-content: space-between;
-	margin-top: 35px;
-	margin-bottom: 75px;
+	margin-top: 3rem;
+	margin-bottom: 7rem;
 }
 
 .info_section .info_top .info_logo {

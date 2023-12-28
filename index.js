@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 require('./config/db');
 
-
 // const punycode = require('punycode');
 const Express = require('express');
 const handlebars = require('handlebars');

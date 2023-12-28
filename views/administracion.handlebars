@@ -1,26 +1,30 @@
 <main class="lista-vacantes">
-    <h2>Realiza una acción</h2>
+    <h2>Edita Perfil y Crea Vacantes</h2>
     <div class="botones separador">
         <a href="/editar-perfil" class="btn btn-verde">Editar Perfil</a>
         <a href="/vacantes/nueva" class="btn btn-rojo">Nueva Vacante</a>
     </div>
 
-    <h2>Tús Vacantes</h2>
+    <h2>Vacantes Creadas</h2>
+    <div class="panel-administracion">
     {{#if vacantes.length}}
         {{#each vacantes}}
-            <div class="vacante panel-administracion">
+            <div class="vacante">
                 <div class="caja">
                     <h3>{{empresa}}</h3>
                     <p class="puesto">{{titulo}}</p>
+                    <p class="candidatos">
+                        {{candidatos.length}} Candidato(s)
+                    </p>
                 </div>
-                <div class="central-vertical caja">
-                    <a href="/candidatos/{{id}}" class="btn btn-verde">Candidatos</a>
+                <div class="centrar-vertical caja">
+                    <a href="/candidatos/{{id}}" class="btn btn-azul">Candidatos</a>
                 </div>
-                <div class="central-vertical caja">
-                    <a  href="#" data-eliminar= {{id}} class="btn btn-rojo">Eliminar</a>
-                </div>
-                <div class="central-vertical caja">
+                <div class="centrar-vertical caja">
                     <a href="/vacantes/editar/{{url}}" class="btn btn-verde">Editar</a>
+                </div>
+                <div class="centrar-vertical caja">
+                    <a href="#" data-eliminar="{{_id}}" class="btn btn-rojo">Eliminar</a>
                 </div>
             </div>
 
@@ -28,4 +32,5 @@
     {{else}}
         <p>No Hay Vacantes</p>
     {{/if}}
+    </div>
 </main>

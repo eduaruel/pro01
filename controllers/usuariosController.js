@@ -1,5 +1,65 @@
 const mongoose = require('mongoose');
+const { isInt8Array } = require('util/types');
 const Usuarios = mongoose.model('Usuarios');
+const multer = require('multer');
+const { nanoid } = require('nanoid');
+const { error } = require('console');
+
+// Opciones de multer
+const configuracionMulter = {
+    limits:{fileSize: 100000},
+    
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, __dirname + '../../public/uploads/perfiles');
+        },
+        filename: (req, file, cb) => {
+            const extension = file.mimetype.split('/')[1];
+            const nombreArchivo = `${nanoid()}.${extension}`;
+            //console.log(nombreArchivo);
+            cb(null, nombreArchivo);
+        },
+    }),
+    fileFilter(req,file,cb){
+        if(file.mimetype === 'image/jpeg' || file.minetype === 'image/png'){
+            cb(null,true);
+        }else{
+            cb(new Error('Formato no Válido'),false);
+        }
+    }
+};
+
+const upload = multer(configuracionMulter).single('imagen');
+
+exports.subirImagen = (req, res, next) => {
+    upload(req, res, function (error) {
+       if (error){
+        // console.log(error);
+             if (error instanceof multer.MulterError) {
+                // Manejar errores de Multer
+                if (error.code === 'LIMIT_FILE_SIZE') {
+                    req.flash('error','El tamaño del archivo es muy grande maximo 100 kb')
+                }else{
+                    req.flash('error',error.message)
+                }
+            } else {
+                // Manejar otros errores
+               req.flash('error', error.message)
+            }
+            res.redirect('/administracion');
+            return;
+       }else {
+          // Si la carga fue exitosa, continuar con el siguiente middleware
+        return next();
+       }
+
+        
+
+      
+    });
+};
+
+
 
 exports.formCrearCuenta = (req,res)=>{
     res.render('crear-cuenta',{
@@ -78,7 +138,8 @@ exports.formEditarPerfil = (req, res) => {
         Usuarios: req.user,
         cerrarSesion:true,
         nombre: req.user.nombre,
-        mostrarImagen3: true
+        imagen: req.user.imagen,
+        mostrarImagen5: true
     })
 }
 
@@ -93,8 +154,11 @@ exports.editarPerfil = async (req, res) => {
     if (req.body.password) {
         usuario.password = req.body.password;
     }
-    req.flash('correcto', 'Cambios Sactifactorio')
+    if (req.file){
+        usuario.imagen = req.file.filename;
+    }
     await usuario.save();
+    req.flash('correcto', 'Cambios Sactifactorio')
 
     //redireccionando
 
@@ -109,7 +173,6 @@ exports.validarPerfil = (req, res, next) =>{
     if(req.body.password){
         req.sanitizeBody('password').escape();
     }
-
     //validar
     req.checkBody('nombre','El nombre no puede ir vacio').notEmpty();
     req.checkBody('email','El email no puede ir vacio').notEmpty();
@@ -120,12 +183,13 @@ exports.validarPerfil = (req, res, next) =>{
         req.flash('error', errores.map(error => error.msg));
 
         res.render('editar-perfil', {
-        nombrePagina: 'editar tú Perfil con SG Venezuela',
+        nombrePagina: 'Editar tú Perfil con SG Venezuela',
         nombrePaginaMostrar:true,
         Usuarios: req.user,
         cerrarSesion:true,
         nombre: req.user.nombre,
-        mostrarImagen3: true,
+        mostrarImagen5: true,
+        imagen: req.user.imagen,
         mensajes: req.flash()
 
          })

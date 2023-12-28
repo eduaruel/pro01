@@ -228,6 +228,12 @@
 	.lista-conocimientos li {
 		flex: 0 0 calc(25% - 1rem);
 	}
+	.enviar-datos {
+		flex: 0 0 calc(70% - 1rem);
+	}
+	.info-reclutador {
+		flex: 0 0 calc(30% - 1rem);
+	}
 }
 @media (min-width: 992px) {
 	.lista-conocimientos li {

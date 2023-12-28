@@ -26,6 +26,8 @@ exports.panel = async (req, res) => {
     //se realiza una consulta al usuario
     const vacantes = await Vacante.find({autor: req.user._id});
 
+    // console.log(vacantes);
+    
 
     res.render('administracion',{
         nombrePagina: 'Panel Administrativo',
@@ -35,6 +37,7 @@ exports.panel = async (req, res) => {
         cerrarSesion:true,
         nombre: req.user.nombre,
         mostrarImagen2:true,
+        imagen: req.user.imagen,
         vacantes
         
     });
