@@ -73,10 +73,10 @@ exports.formCrearCuenta = (req,res)=>{
 
 exports.validarRegistro = (req, res, next) => {
     //sanitizar 
-    req.sanitize('nombre').escape();
-    req.sanitize('email').escape();
-    req.sanitize('password').escape();
-    req.sanitize('confirmar').escape();
+    req.sanitize('nombre');
+    req.sanitize('email');
+    req.sanitize('password');
+    req.sanitize('confirmar');
 
     //validar
     req.checkBody('nombre', 'Nombre Obligatorio').notEmpty();
@@ -127,6 +127,7 @@ exports.formIniciarSesion = (req, res) => {
     res.render('iniciar-sesion', {
         nombrePagina: 'Iniciar-Sesión',
         nombrePaginaMostrar:true,
+        
     })
 }
 

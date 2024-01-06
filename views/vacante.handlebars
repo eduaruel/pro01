@@ -23,10 +23,11 @@
       <div class="vacante-descripcion">
          {{{vacante.descripcion}}}
       </div>
-
+      {{#if botonEditar}}
       <div class="grid">
       <a href="/vacantes/editar/{{vacante.url}}" class="btn btn-verde">Editar Vacante</a>
       </div>
+      {{/if}}
    
    </main>
    <aside class="sidebar">

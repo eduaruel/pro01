@@ -3,6 +3,8 @@ const Vacante = mongoose.model('Vacante');
 const multer = require('multer');
 const { nanoid } = require('nanoid');
 const path = require('path');
+const Usuarios = mongoose.model('Usuarios');
+
 
 exports.formularioNuevaVacante = (req, res) => {
 	res.render('nueva-vacante', {
@@ -43,6 +45,8 @@ exports.agregarVacante = async (req, res) => {
 //mostrar nueva Vacante
 exports.mostrarVacante = async (req, res, next) => {
     const vacante = await Vacante.findOne({ url: req.params.url }).populate('autor');
+    const usuario = await Vacante.find({autor: req.user._id});
+  
     // console.log(vacante);
 
     // si no hay resultados
@@ -53,7 +57,8 @@ exports.mostrarVacante = async (req, res, next) => {
         nombrePagina: vacante.titulo,
         boton:false,
 		parrafo:false,
-		nombrePaginaMostrar:true
+		nombrePaginaMostrar:true,
+        botonEditar: false
     })
 }
 
@@ -224,7 +229,7 @@ exports.contactar = async (req, res, next) => {
     // sino existe la vacante
     if(!vacante) return next();
 
-    //  todo bien, construir el nuevo objeto
+    //  si va bien, construir el nuevo objeto
     const nuevoCandidato = {
         nombre: req.body.nombre,
         email: req.body.email,
@@ -256,5 +261,21 @@ exports.mostrarCandidatos = async (req, res, next) => {
         imagen : req.user.imagen,
         candidatos : vacante.candidatos,
         nombrePaginaMostrar:true
+    })
+}
+//buscar vacantes
+exports.buscarVacantes = async(req,res)=>{
+    const vacantes = await Vacante.find({
+        $text:{
+            $search: req.body.q
+        }
+    });
+    // console.log(vacantes);
+    res.render('home',{
+        nombrePagina: `Resultados: ${req.body.q}`,
+        nombrePaginaMostrar:true,
+        mostrarImagen: true,
+        barra:true,
+        vacantes
     })
 }

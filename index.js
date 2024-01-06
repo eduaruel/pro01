@@ -14,6 +14,7 @@ const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
+const createError = require('http-errors');
 const passport = require('./config/passport');
 const expressSanitizer = require('express-sanitizer');
 
@@ -71,6 +72,23 @@ app.use((req, res, next)=>{
 })
 
 app.use('/', router());
+
+// 404 pagina no existente
+app.use((req, res, next) => {
+    next(createError(404, 'Información No Encontrado'));
+})
+
+// Administración de los errores
+app.use((error, req, res, next) => {
+    res.locals.mensaje = error.message;
+    const status = error.status || 500;
+    res.locals.status = status;
+    res.status(status);
+    res.render('error',{
+		nombrePagina: 'Error, Intente nuevamente',
+		nombrePaginaMostrar: true
+	});
+});
 
 app.listen(process.env.PUERTO, console.log('Servidor Arriba'));
 

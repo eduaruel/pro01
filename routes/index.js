@@ -52,6 +52,15 @@ module.exports = () => {
         authController.cerrarSesion
     );
 
+    //recuper password con email
+    router.get('/reestablecer-password', authController.restablecerContrasena);
+    router.post('/reestablecer-password', authController.enviarToken);
+
+    //recuper password (almacenada en mongo)
+     router.get('/reestablecer-password/:token', authController.restablecerContrasenaDB);
+     router.post('/reestablecer-password/:token', authController.guardaPassword);
+
+
     //panel
     router.get('/administracion',
     authController.verificarUsuario,
@@ -79,6 +88,9 @@ module.exports = () => {
         authController.verificarUsuario,
         vacantesController.mostrarCandidatos
     )
+
+    //buscador de vacantes
+    router.post('/buscador',vacantesController.buscarVacantes)
 
 	return router;
     
