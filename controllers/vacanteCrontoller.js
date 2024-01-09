@@ -45,7 +45,7 @@ exports.agregarVacante = async (req, res) => {
 //mostrar nueva Vacante
 exports.mostrarVacante = async (req, res, next) => {
     const vacante = await Vacante.findOne({ url: req.params.url }).populate('autor');
-    const usuario = await Vacante.find({autor: req.user._id});
+   // const usuario = await Vacante.find({autor: req.user._id});
   
     // console.log(vacante);
 
@@ -209,6 +209,7 @@ const configuracionMulter = {
             const nombreArchivo = `${nanoid()}.${extension}`;
             //console.log(nombreArchivo);
             cb(null, nombreArchivo);
+          
         },
     }),
     fileFilter(req,file,cb){
@@ -230,12 +231,14 @@ exports.contactar = async (req, res, next) => {
     if(!vacante) return next();
 
     //  si va bien, construir el nuevo objeto
-    const nuevoCandidato = {
+   try {
+     const nuevoCandidato = {
         nombre: req.body.nombre,
         email: req.body.email,
-        cv : req.file.filename
+        cv : req.file.filename,
+        
     }
-
+  
     // almacenar la vacante
     vacante.candidatos.push(nuevoCandidato);
     await vacante.save();
@@ -243,6 +246,10 @@ exports.contactar = async (req, res, next) => {
     // mensaje flash y redireccion
     req.flash('correcto', 'La Informacion fue Enviada Correctamente');
     res.redirect('/');
+   } catch (error) {
+    req.flash('error', 'Faltó subir tu CV');
+    res.redirect('/');
+   }
 }
 
 exports.mostrarCandidatos = async (req, res, next) => {

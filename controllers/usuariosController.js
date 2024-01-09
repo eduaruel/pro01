@@ -202,3 +202,16 @@ exports.validarPerfil = (req, res, next) =>{
 
 
 }
+
+exports.premium = (req,res) =>{
+    
+    res.render('premium',{
+        nombrePagina:'Sesion Premium',
+        nombrePaginaMostrar:true,
+        mostrarImagen6:true,
+        imagen: req.user.imagen,
+        Usuarios: req.user,
+        nombre: req.user.nombre,
+        cerrarSesion:true,
+    })
+}

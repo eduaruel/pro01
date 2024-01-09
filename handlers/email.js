@@ -3,15 +3,14 @@ const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
 const util = require('util');
 
-let transport = nodemailer.createTransport({
-    host: emailConfig.host,
-    port: emailConfig.port,
-    auth: {
-        user: emailConfig.user,
-        pass: emailConfig.pass
-    }
-
-})
+//Creamos el objeto de transporte
+var transport = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'sgvenezuela1@gmail.com',
+    pass: 'yqokezmifhdyantu'
+  }
+});
 
 transport.use('compile',hbs({
     viewEngine: {
@@ -25,7 +24,7 @@ transport.use('compile',hbs({
 
 exports.enviar = async (opciones) => {
     const opcionesEmail = {
-        from: 'SG Venezuela <noreply@gmail.com>',
+        from: 'SG Venezuela <sgvenezuela1@gmail.com>',
         to: opciones.usuario.email,
         subject: opciones.subject,
         template: opciones.archivo,

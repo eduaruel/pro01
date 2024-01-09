@@ -52,9 +52,9 @@ module.exports = {
 		// console.log(html);
 		 return alertas.fn().html = html;
 	}
+
+
+
+	
 };
 
-
-
-
- 

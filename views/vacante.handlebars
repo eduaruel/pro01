@@ -47,18 +47,18 @@
       <form action="/vacantes/{{vacante.url}}" method="POST" class="default-form" enctype="multipart/form-data">
          <div class="campo">
             <label>Nombre</label>
-            <input type="text" name="nombre" placeholder="Nombre">
+            <input type="text" name="nombre" placeholder="Nombre" required>
          </div>
          <div class="campo">
             <label>E-mail</label>
-            <input type="email" name="email" placeholder="E-mail">
+            <input type="email" name="email" placeholder="E-mail" required>
          </div>
          <div class="campo">
             <label>CV (PDF)</label>
             <input type="file" name="cv" >
          </div>
          <div class="campo grid">
-            <input type="submit" class="btn btn-azul" value="Enviar">
+            <input type="submit" class="btn btn-azul" value="Enviar" required>
          </div>
       </form>
 

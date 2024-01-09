@@ -73,7 +73,7 @@ module.exports = () => {
     );
     router.post('/editar-perfil',
         authController.verificarUsuario,
-        usuariosController.validarPerfil,
+        //usuariosController.validarPerfil,
         usuariosController.subirImagen,
         usuariosController.editarPerfil
     )
@@ -92,6 +92,10 @@ module.exports = () => {
     //buscador de vacantes
     router.post('/buscador',vacantesController.buscarVacantes)
 
+    //sessión premium
+    router.get('/premium',usuariosController.premium)
+
+    
 	return router;
     
 };
