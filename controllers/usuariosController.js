@@ -210,6 +210,40 @@ exports.validarPerfil = (req, res, next) =>{
 
     }
 }
+exports.validarEdicionVacante = (req, res, next) =>{
+    // console.log(req)
+    // return
+    if (req.body.titulo === '') {
+        req.checkBody('nombre','El titulo no puede ir vacio').notEmpty();
+    }
+
+    if (req.body.empresa === '') {
+        req.checkBody('email','La empresa no puede ir vacio').notEmpty();
+    }
+    if (req.body.ubicacion === '') {
+        req.checkBody('email','La empresa no puede ir vacio').notEmpty();
+    }
+    if (req.body.salario === '') {
+        req.checkBody('email','El salario no puede ir vacio').notEmpty();
+    }
+    if (req.body.contrato === '') {
+        req.checkBody('email','El contrato no puede ir vacio').notEmpty();
+    }
+    if (req.body.skills === '') {
+        req.checkBody('email','Debe Seleccionar un skills').notEmpty();
+    }
+
+    const errores = req.validationErrors();
+
+    if (errores) {
+        req.flash('error', errores.map(error => error.msg));
+        res.redirect('/administracion');
+    }else{
+
+        next()
+
+    }
+}
 
 exports.premium = (req,res) =>{
     

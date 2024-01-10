@@ -27,7 +27,7 @@ module.exports = () => {
 
     router.post('/vacantes/editar/:url',
     authController.verificarUsuario,
-    
+    usuariosController.validarEdicionVacante,
     vacantesController.editarVacante);
 
     //Eliminar las Vacantes
