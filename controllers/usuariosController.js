@@ -146,43 +146,53 @@ exports.formEditarPerfil = (req, res) => {
 
 //Guardar cambios editar perfil
 exports.editarPerfil = async (req, res) => {
-    const usuario = await Usuarios.findById(req.user._id);
+    try {  
+        const usuario = await Usuarios.findById(req.session.passport.user);
+        usuario.nombre = req.body.nombre || ''; 
+        usuario.email = req.body.email || '';
+    
+        if (req.body.password) {
+            usuario.password = req.body.password;
+        }
+    
+        if (req.file){
+            usuario.imagen = req.file.filename;
+        }
+    
+    
+        await usuario.save();
+    
+        req.flash('correcto', 'Cambios Sactifactorio')
+        //redireccionando
+        res.redirect('/administracion');
+    } catch (error) {
+        if (req.body.nombre === '') {
+            req.flash('error', 'El nombre no puede ir vacio');
 
-    // console.log(usuario);
+        }
 
-    usuario.nombre = req.body.nombre;
-    usuario.email  = req.body.email;
-    if (req.body.password) {
-        usuario.password = req.body.password;
+        if (req.body.email === '') {
+            req.flash('error', 'El email no puede ir vacio');
+        }
+
+        res.redirect('/editar-perfil');
     }
-    if (req.file){
-        usuario.imagen = req.file.filename;
-    }
-    await usuario.save();
-    req.flash('correcto', 'Cambios Sactifactorio')
-
-    //redireccionando
-
-    res.redirect('/administracion');
 }
 
 //senitizar y validar formualario de editar perfiles
 exports.validarPerfil = (req, res, next) =>{
-    //sanitizar
-    req.sanitizeBody('nombre').escape();
-    req.sanitizeBody('email').escape();
-    if(req.body.password){
-        req.sanitizeBody('password').escape();
+    if (req.user.nombre === '') {
+        req.checkBody('nombre','El nombre no puede ir vacio').notEmpty();
     }
-    //validar
-    req.checkBody('nombre','El nombre no puede ir vacio').notEmpty();
-    req.checkBody('email','El email no puede ir vacio').notEmpty();
+
+    if (req.user.password === '') {
+        req.checkBody('email','El email no puede ir vacio').notEmpty();
+    }
 
     const errores = req.validationErrors();
 
-    if(errores){
+    if (errores) {
         req.flash('error', errores.map(error => error.msg));
-
         res.render('editar-perfil', {
         nombrePagina: 'Editar tú Perfil con SG Venezuela',
         nombrePaginaMostrar:true,
@@ -199,8 +209,6 @@ exports.validarPerfil = (req, res, next) =>{
         next()
 
     }
-
-
 }
 
 exports.premium = (req,res) =>{

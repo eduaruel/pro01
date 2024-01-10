@@ -1,12 +1,12 @@
 <main class="contenedor">
-    <form action="/editar-perfil" method="POST" class="default-form" enctype="multipart/form-data">
+    <form action="/editar-perfil" method="POST" role="form" class="default-form" enctype="multipart/form-data">
     <div class="campo">
         <label>Nombre</label>
-        <input type="text" name="nombre" placeholder="Nombre" value="{{Usuarios.nombre}}" required>
+        <input type="text" name="nombre" placeholder="Nombre" value="{{Usuarios.nombre}}">
     </div>
     <div class="campo">
         <label>E-mail</label>
-        <input type="email" name="email" placeholder="E-mail" value="{{Usuarios.email}}"required>
+        <input type="email" name="email" placeholder="E-mail" value="{{Usuarios.email}}">
     </div>
     <div class="campo">
         <label>Password</label>
