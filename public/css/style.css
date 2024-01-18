@@ -180,13 +180,14 @@ p.candidatos {
 .vacante:last-of-type {
 	border: none;
 }
+
 .vacante-contenedor h2 {
 	color: #060606;
 	font-size: 2.4rem;
 }
 .contenedor {
 	max-width: 100rem;
-	margin: 0 auto;
+	margin: 4rem auto;
 }
 .vacante-contenedor h2 {
 	color: #616065;
@@ -425,6 +426,7 @@ trix-toolbar .trix-button--icon-strike {
 .cerrar-sesion img {
 	width: 80px;
 }
+
 /*header section*/
 .hero_area {
 	height: calc(100vh - 30px);
@@ -666,7 +668,7 @@ a:focus {
 .slider_section .detail-box .btn-box .btn-2 {
 	display: inline-block;
 	padding: 10px 0;
-	background-color: #ffffff;
+	background-color: #1cbbb4;
 	color: #252525;
 	-webkit-transition: all 0.3s;
 	transition: all 0.3s;
@@ -676,8 +678,8 @@ a:focus {
 
 .slider_section .detail-box .btn-box .btn-2:hover {
 	background-color: transparent;
-	border-color: #ffffff;
-	color: #ffffff;
+	border-color: #1cbbb4;
+	color: #1cbbb4;
 }
 
 .slider_section .img-container .img-box img {
@@ -1309,4 +1311,5 @@ a:focus {
 	opacity: 0;
 }
 
+/* miguel */
 /* ***********************************************************************************************/

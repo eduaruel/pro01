@@ -1,9 +1,11 @@
-<div class="lista-vacantes">
-    <h2>Información del Plan Premium</h2>
+<div class="lista-vacantes contenedor">
+    <h2 class="center">Información del Plan Premium</h2>
     <div class="botones separador">
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit voluptate dolor pariatur laudantium aut placeat architecto quasi eos nam esse iusto quia, in ut inventore id temporibus cum minus delectus!</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione nam alias aliquam quam officiis, earum numquam quasi voluptatum dolore totam itaque accusantium pariatur placeat fugit corrupti ab magni excepturi eligendi!</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione nam alias aliquam quam officiis, earum numquam quasi voluptatum dolore totam itaque accusantium pariatur placeat fugit corrupti ab magni excepturi eligendi!</p>
+    <p>Al realizar este pago, estarás asegurando tu mesión en nuestra publicidad y tendrás acceso a nuestras planes premium y servicios que tenemos a futuro.</p>
+    <p>El proceso de pago es fácil y seguro. Solo necesitarás ingresar los detalles de tu tarjeta de crédito y confirmar la
+    transacción. Si tienes cuenta paypal ingresa el correo electronico afiliado</p>
+    <p>Agradecemos tu confianza en nosotros. Tu pago contribuye significativamente a nuestro continuo esfuerzo por brindarte el
+    mejor servicio posible.</p>
     </div>
 </div>
 <div class="grid">
@@ -18,39 +20,6 @@
     src="https://www.paypal.com/sdk/js?client-id=AUl8LVGSvwYYBFOz8lR16EPZSdP2fF7Du3fg5Ua5PaCoQOQJkPU7Qu9CqXNzxASPiWP30ccIOks65YMo&currency=USD"
     data-sdk-integration-source="button-factory"></script>
 
-<script>
-    function initPayPalButton() {
-        paypal
-            .Buttons({
-                style: {
-                    shape: 'rect',
-                    color: 'gold',
-                    layout: 'vertical',
-                    label: 'pay',
-                },
-                createOrder: function (data, actions) {
-                    return actions.order.create({
-                        purchase_units: [
-                            {
-                                description: 'DONA PARA REALIZAR TU PUBLICIDAD',
-                                amount: { currency_code: 'USD', value: 13 },
-                            },
-                        ],
-                    });
-                },
-                onApprove: function (data, actions) {
-                    return actions.order.capture().then(function (orderData) {
-                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                        actions.redirect('LA URL DE TU PAGINA DE GRACIAS');
-                    });
-                },
-                onError: function (err) {
-                    console.log(err);
-                },
-            })
-            .render('#paypal-button-container');
-    }
-    initPayPalButton();
-</script>
+
 <div></div>
 </div>

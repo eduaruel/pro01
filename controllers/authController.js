@@ -12,6 +12,12 @@ exports.autenticarUsuario = passport.authenticate('local', {
     failureFlash: true,
     badRequestMessage : 'Ambos campos son obligatorios',
 });
+exports.autenticarUsuarioAdmin = passport.authenticate('local', {
+    successRedirect : '/admin',
+    failureRedirect : '/iniciar-administrador', 
+    failureFlash: true,
+    badRequestMessage : 'Ambos campos son obligatorios',
+});
 
 //revision cuando el usuario se autentica
 exports.verificarUsuario = (req, res, next) => {
@@ -24,6 +30,25 @@ exports.verificarUsuario = (req, res, next) => {
     res.redirect('/iniciar-sesion')
 }
 
+exports.verificarUsuarioAdmin = async (req, res, next) => {
+    try {
+        const admin = await Usuarios.findById(req.user._id);
+
+        // Revisar usuario
+        if (req.isAuthenticated() && admin && admin._id.toString() === '65a4af0ecc5f625ba7b745f9') {
+            return next(); // Están autenticados
+        }
+
+        // Redireccionar
+        req.flash('error', 'No eres el Administador')
+         res.redirect('/iniciar-administrador');
+    } catch (error) {
+        console.error(error);
+        
+        res.redirect('/iniciar-administrador');
+    }
+};
+
 
 exports.panel = async (req, res) => {
     //se realiza una consulta al usuario
@@ -34,6 +59,25 @@ exports.panel = async (req, res) => {
     res.render('administracion',{
         nombrePagina: 'Panel Administrativo',
         tagLine: 'Crea y Administra tus Vacantes',
+        nombrePaginaMostrar:true,
+        nuevaTagLine:true,
+        cerrarSesion:true,
+        nombre: req.user.nombre,
+        mostrarImagen2:true,
+        imagen: req.user.imagen,
+        vacantes
+        
+    });
+};
+exports.panelAdmin = async (req, res) => {
+    //se realiza una consulta al usuario
+    const vacantes = await Vacante.find({autor: req.user._id});
+
+    // console.log(vacantes);
+    
+    res.render('admin',{
+        nombrePagina: 'administrador',
+        tagLine: 'Administra',
         nombrePaginaMostrar:true,
         nuevaTagLine:true,
         cerrarSesion:true,

@@ -130,6 +130,14 @@ exports.formIniciarSesion = (req, res) => {
         
     })
 }
+// formulario Admin
+exports.formIniciarSesionAdmin = (req, res) => {
+    res.render('iniciar-administrador', {
+        nombrePagina: 'Iniciar-Aministrador',
+        nombrePaginaMostrar:true,
+        
+    })
+}
 
 //form  editar perfil
 exports.formEditarPerfil = (req, res) => {
